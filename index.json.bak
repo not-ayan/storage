@@ -109909,6 +109909,84 @@
         }
     },
     {
+        "file_name": "\u0e05 \u0e05 \u1d39\u1d43\u1d48\u1d49 \u02b7\u2071\u1d57\u02b0 \u1d2c\u1d35",
+        "file_cache_name": "\u0e05 \u0e05 \u1d39\u1d43\u1d48\u1d49 \u02b7\u2071\u1d57\u02b0 \u1d2c\u1d35.webp",
+        "file_main_name": "\u0e05 \u0e05 \u1d39\u1d43\u1d48\u1d49 \u02b7\u2071\u1d57\u02b0 \u1d2c\u1d35.png",
+        "width": 2944,
+        "height": 5248,
+        "resolution": "4K",
+        "orientation": "Mobile",
+        "timestamp": "2025-05-19T09:57:59.494651+00:00",
+        "category": "#anime",
+        "data": {
+            "character_names": [
+                "unknown"
+            ],
+            "series": "unknown",
+            "art_style": "anime",
+            "primary_colors": [
+                "yellow",
+                "orange",
+                "green",
+                "black",
+                "white"
+            ],
+            "secondary_colors": [
+                "gold",
+                "amber"
+            ],
+            "color_palette": "warm-tones",
+            "mood": "dreamy",
+            "technique": "digital-painting",
+            "scene_description": "A young person with short dark hair is depicted in profile, with their eyes closed and head tilted back, bathed in the warm glow of a setting sun. They are surrounded by lush green foliage and illuminated by numerous small, glowing orbs, suggesting a magical or ethereal atmosphere. The overall impression is one of peaceful contemplation or serene beauty.",
+            "character_details": {
+                "hair_color": "black",
+                "eye_color": "unknown",
+                "clothing_style": "unknown",
+                "pose": "portrait-pose",
+                "facial_expression": "neutral"
+            },
+            "environment": "natural",
+            "lighting": "sunset",
+            "composition": "vertical",
+            "art_quality": "high-detail",
+            "style_influences": [
+                "anime"
+            ],
+            "objects": [
+                "sun",
+                "foliage",
+                "glowing orbs"
+            ],
+            "textures": [
+                "smooth",
+                "grass",
+                "leaves"
+            ],
+            "type": "character-portrait",
+            "tags": [
+                "anime-art",
+                "sunset-scene",
+                "dreamy-mood",
+                "warm-colors",
+                "golden-hour",
+                "nature-setting",
+                "glowing-orbs",
+                "peaceful-atmosphere",
+                "contemplative-pose",
+                "profile-view",
+                "dark-hair",
+                "digital-painting",
+                "high-detail",
+                "ethereal-lighting",
+                "nature-beauty",
+                "serene-scene",
+                "outdoor-environment",
+                "bokeh-effect"
+            ]
+        }
+    },
+    {
         "file_name": "samurai-horse-butterflies",
         "file_cache_name": "samurai-horse-butterflies.webp",
         "file_main_name": "samurai-horse-butterflies.png",
@@ -114175,6 +114253,91 @@
                 "minimalist-style",
                 "ambient-lighting",
                 "landscape-art"
+            ]
+        }
+    },
+    {
+        "file_name": "wanted_posters",
+        "file_cache_name": "wanted_posters.webp",
+        "file_main_name": "wanted_posters.png",
+        "width": 2944,
+        "height": 4676,
+        "resolution": "4K",
+        "orientation": "Mobile",
+        "timestamp": "2025-05-28T18:14:02.889936+00:00",
+        "category": "#anime",
+        "data": {
+            "character_names": [
+                "Monkey D. Luffy",
+                "Nami",
+                "Nico Robin",
+                "Sanji",
+                "Franky",
+                "Killer"
+            ],
+            "series": "One Piece",
+            "art_style": "anime",
+            "primary_colors": [
+                "yellow",
+                "brown",
+                "green",
+                "pink",
+                "black"
+            ],
+            "secondary_colors": [
+                "white",
+                "gray",
+                "tan"
+            ],
+            "color_palette": "warm-tones",
+            "mood": "nostalgic",
+            "technique": "digital-painting",
+            "scene_description": "A young girl with pink hair stands in front of a wall covered in numerous \"WANTED\" posters from the anime series One Piece. The posters feature various characters from the series, many of whom are recognizable. The lighting is soft and warm, casting a glow on the scene and highlighting the posters.",
+            "character_details": {
+                "hair_color": "pink",
+                "eye_color": "unknown",
+                "clothing_style": "casual",
+                "pose": "standing",
+                "facial_expression": "neutral"
+            },
+            "environment": "indoor",
+            "lighting": "ambient",
+            "composition": "vertical",
+            "art_quality": "high-detail",
+            "style_influences": [
+                "anime",
+                "manga"
+            ],
+            "objects": [
+                "wanted posters",
+                "bag"
+            ],
+            "textures": [
+                "fabric",
+                "paper",
+                "skin"
+            ],
+            "type": "multiple-characters",
+            "tags": [
+                "one-piece",
+                "anime",
+                "wanted-posters",
+                "monkey-d-luffy",
+                "nami",
+                "nico-robin",
+                "sanji",
+                "franky",
+                "killer",
+                "pirates",
+                "straw-hat-pirates",
+                "pink-hair",
+                "girl",
+                "nostalgic",
+                "warm-lighting",
+                "digital-art",
+                "high-detail",
+                "character-collection",
+                "fan-art"
             ]
         }
     },

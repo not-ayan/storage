@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallpaper Manager | Unified View</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>WALLPAPER MANAGER</h1>
+          <span class="brand-badge">Main + Cache + Index Purge</span>
+        </div>
+      </div>
+
+      <!-- Live Stats -->
+      <div class="header-stats">
+        <div class="stat-pill" title="Total Wallpapers in index.json">
+          <span class="stat-icon">🖼️</span>
+          <div class="stat-meta">
+            <span class="stat-label">WALLPAPERS</span>
+            <span class="stat-val" id="stat-count">-</span>
+          </div>
+        </div>
+
+        <div class="stat-pill" title="Total Storage occupied in main/">
+          <span class="stat-icon">💾</span>
+          <div class="stat-meta">
+            <span class="stat-label">MAIN STORAGE</span>
+            <span class="stat-val" id="stat-main">-</span>
+          </div>
+        </div>
+
+        <div class="stat-pill" title="Total Storage occupied in cache/">
+          <span class="stat-icon">⚡</span>
+          <div class="stat-meta">
+            <span class="stat-label">CACHE STORAGE</span>
+            <span class="stat-val" id="stat-cache">-</span>
+          </div>
+        </div>
+
+        <button id="btn-refresh" class="btn-icon" title="Refresh Storage & Index">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Toolbar: Search, Filters, Selection -->
+    <div class="toolbar-section">
+      <div class="toolbar-row">
+        <!-- Search Input -->
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="input-search" placeholder="Search by filename, tag, description, mood... (Press '/' to focus)" autocomplete="off">
+          <button id="btn-clear-search" class="btn-clear hidden">&times;</button>
+        </div>
+
+        <!-- Filter Dropdowns -->
+        <div class="filter-controls">
+          <select id="select-category" title="Filter by category">
+            <option value="all">All Categories</option>
+          </select>
+
+          <select id="select-orientation" title="Filter by orientation">
+            <option value="all">All Orientations</option>
+            <option value="Mobile">Mobile (Portrait)</option>
+            <option value="Desktop">Desktop (Landscape)</option>
+            <option value="Square">Square</option>
+          </select>
+
+          <select id="select-sort" title="Sort wallpapers">
+            <option value="newest" selected>Newest Added</option>
+            <option value="oldest">Oldest Added</option>
+            <option value="size_desc">Main Size (Largest)</option>
+            <option value="size_asc">Main Size (Smallest)</option>
+            <option value="res_desc">Resolution (Highest)</option>
+            <option value="name_asc">Name (A - Z)</option>
+          </select>
+
+          <select id="select-page-size" title="Items per page">
+            <option value="24">24 / page</option>
+            <option value="48" selected>48 / page</option>
+            <option value="96">96 / page</option>
+            <option value="144">144 / page</option>
+          </select>
+        </div>
+
+        <!-- Selection Controls -->
+        <div class="selection-actions">
+          <button id="btn-select-all" class="btn-toolbar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            <span>Select Page</span>
+          </button>
+          <button id="btn-deselect-all-top" class="btn-toolbar hidden">
+            <span>Deselect All</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Filter Chips -->
+      <div class="category-chips-bar" id="category-chips-bar">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Main Singular Gallery View -->
+    <main class="main-gallery-view">
+      <div class="gallery-header">
+        <span id="results-count" class="results-text">Loading wallpapers...</span>
+        <span class="delete-hint">💡 Hover any card to delete individually, or check boxes to batch delete from <strong>Main + Cache + Index</strong>.</span>
+      </div>
+
+      <!-- Wallpaper Cards Grid -->
+      <div id="wallpaper-grid" class="wallpaper-grid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="pagination-bar">
+        <!-- Rendered dynamically -->
+      </div>
+    </main>
+
+    <!-- Floating Batch Action Bar -->
+    <div id="batch-bar" class="batch-bar hidden">
+      <div class="batch-info">
+        <span class="batch-badge" id="batch-count">0</span>
+        <span class="batch-text">wallpapers selected</span>
+        <span class="batch-savings" id="batch-savings-text">(~0 MB to reclaim)</span>
+      </div>
+
+      <div class="batch-buttons">
+        <button id="btn-batch-clear" class="btn-batch-secondary">Deselect All</button>
+        <button id="btn-batch-delete" class="btn-batch-danger">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Delete Selected from Main, Cache & Index</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Singular / Batch Delete Confirmation Modal -->
+    <div id="modal-delete" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-box delete-box">
+        <div class="modal-head">
+          <div class="danger-avatar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 id="delete-title">Delete Wallpaper?</h3>
+            <p id="delete-subtitle">This action permanently deletes from main storage, cache, and index.json.</p>
+          </div>
+        </div>
+
+        <div class="delete-body">
+          <div class="delete-preview-item" id="delete-preview-box">
+            <img id="del-preview-img" src="" alt="Thumbnail preview">
+            <div class="delete-preview-meta">
+              <h4 id="del-preview-title">wallpaper-name</h4>
+              <p id="del-preview-space" class="mono-code">Reclaims: ~0 MB</p>
+            </div>
+          </div>
+
+          <div class="delete-targets-card">
+            <div class="target-row">
+              <span class="target-check">✅</span>
+              <div>
+                <strong>Main Original File</strong>
+                <p id="del-main-path" class="mono-code">main/filename.png</p>
+              </div>
+            </div>
+            <div class="target-row">
+              <span class="target-check">✅</span>
+              <div>
+                <strong>Cache Thumbnail</strong>
+                <p id="del-cache-path" class="mono-code">cache/filename.webp</p>
+              </div>
+            </div>
+            <div class="target-row">
+              <span class="target-check">✅</span>
+              <div>
+                <strong>Database Record</strong>
+                <p>Entry permanently removed from index.json</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warning-alert">
+            ⚠️ <strong>Irreversible Action:</strong> The original image file, cache thumbnail, and database entry will be completely removed.
+          </div>
+        </div>
+
+        <div class="modal-foot">
+          <button id="btn-cancel-del" class="btn-secondary">Cancel</button>
+          <button id="btn-confirm-del" class="btn-danger">
+            <span id="btn-confirm-text">Delete Permanently</span>
+            <div id="del-spinner" class="spinner-sm hidden"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen Preview Lightbox Modal -->
+    <div id="modal-preview" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-box preview-box">
+        <button id="btn-close-preview" class="modal-close">&times;</button>
+        <div class="preview-layout">
+          <div class="preview-stage">
+            <img id="lb-image" src="" alt="Full Wallpaper">
+            <div id="lb-loader" class="preview-loader hidden">
+              <div class="spinner"></div>
+            </div>
+          </div>
+          <div class="preview-sidebar">
+            <h3 id="lb-title">Wallpaper Title</h3>
+            <p id="lb-filename" class="mono-code lb-filename">filename</p>
+
+            <div class="lb-specs">
+              <div class="spec-cell">
+                <span class="spec-lbl">Resolution</span>
+                <span class="spec-val" id="lb-resolution">-</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-lbl">Dimensions</span>
+                <span class="spec-val mono-code" id="lb-dimensions">-</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-lbl">Main File</span>
+                <span class="spec-val mono-code" id="lb-main-size">-</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-lbl">Cache File</span>
+                <span class="spec-val mono-code" id="lb-cache-size">-</span>
+              </div>
+            </div>
+
+            <div class="lb-section" id="lb-desc-section">
+              <span class="section-label">Scene Description</span>
+              <p id="lb-description" class="lb-desc-text">-</p>
+            </div>
+
+            <div class="lb-section" id="lb-tags-section">
+              <span class="section-label">Tags</span>
+              <div id="lb-tags" class="lb-tags-wrap"></div>
+            </div>
+
+            <div class="lb-actions">
+              <a id="lb-btn-original" href="#" target="_blank" class="btn-secondary">Open Full Original</a>
+              <button id="lb-btn-delete" class="btn-danger">Delete Wallpaper</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-shelf" class="toast-shelf" aria-live="polite"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
